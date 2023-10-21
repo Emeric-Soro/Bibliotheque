@@ -10,6 +10,8 @@ public class Principal{
         LivreScientifique Livre1 = new LivreScientifique(1,"ABC","Alpha","AB","Scientifique",2,"Education","Primaire","educatif");
         Roman Livre2 = new Roman(2,"L'Etranger","Albert Camus","Folio","Roman",50,"fiction Absurde");
         Professeur P1 = new Professeur("Satoru","Abidjan","0123456789","Math");
+        Etudiant E1 = new Etudiant("Kouame Brunelle", "Rue de la BIA","0787547896","L2-Droit");
+        biblio.AjouterUtilisateur(E1);
         biblio.AjouterUtilisateur(P1);
         biblio.AjouterLivre(Livre1);
         biblio.AjouterLivre(Livre2);
