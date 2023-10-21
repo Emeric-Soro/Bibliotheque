@@ -1,7 +1,7 @@
-public class Auteur {
-    private String Nom;
-    private String DateNaissance;
-    private String Biographie;
+public class Auteur implements MethodeCommune{
+    private final String Nom;
+    private final String DateNaissance;
+    private final String Biographie;
 
     public Auteur(String nom, String dateNaissance, String biographie) {
         Nom = nom;
@@ -12,24 +12,16 @@ public class Auteur {
     public String getNom() {
         return Nom;
     }
-
-    public void setNom(String nom) {
-        Nom = nom;
-    }
-
     public String getDateNaissance() {
         return DateNaissance;
     }
-
-    public void setDateNaissance(String dateNaissance) {
-        DateNaissance = dateNaissance;
-    }
-
     public String getBiographie() {
         return Biographie;
     }
-
-    public void setBiographie(String biographie) {
-        Biographie = biographie;
+    @Override
+    public void AfficherDetails(){
+        System.out.println("NOM : "+getNom());
+        System.out.println("Date de naissance : "+getDateNaissance());
+        System.out.println("Bio : "+getBiographie());
     }
 }

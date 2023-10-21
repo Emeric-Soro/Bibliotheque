@@ -37,6 +37,13 @@ public abstract class Utilisateur implements MethodeCommune{
     public void EmprunterLivre(Livre l){
         LivresEmprunter.add(l);
     }
+    public void RendreLivre(Livre l){
+        LivresEmprunter.remove(l);
+    }
+
+    public ArrayList<Livre> getLivresEmprunter() {
+        return LivresEmprunter;
+    }
 
     @Override
     public abstract void AfficherDetails();

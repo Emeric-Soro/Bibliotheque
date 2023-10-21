@@ -8,6 +8,10 @@ public class Etudiant extends Utilisateur {
 
     @Override
     public void AfficherDetails() {
+        System.out.println("NOM : "+getNom());
+        System.out.println("Adresse : "+getAdresse());
+        System.out.println("Numero de telephone : "+getNumeroTelephone());
+        System.out.println("Departement : "+classe);
 
     }
 }

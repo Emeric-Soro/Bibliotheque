@@ -11,14 +11,15 @@ public class Principal{
         Roman Livre2 = new Roman(2,"L'Etranger","Albert Camus","Folio","Roman",50,"fiction Absurde");
         Professeur P1 = new Professeur("Satoru","Abidjan","0123456789","Math");
         biblio.AjouterUtilisateur(P1);
-        biblio.AjouterLivre(Livre2);
         biblio.AjouterLivre(Livre1);
-        int choix;
+        biblio.AjouterLivre(Livre2);
+        int choix = 0;
+        int choixId = 0;
         String Titre;
         String Auteur;
         String Edition;
         String Categorie;
-        int Quantite;
+        int Quantite = 0;
         int Id;
         String Domaine;
         String Niveau;
@@ -29,6 +30,7 @@ public class Principal{
         String NumeroTel;
         String Departement;
         String Classe;
+        boolean validation = false;
         System.out.println("\n~~~~~~~~~~~~~~~~~~bienvenue dans ma bibliotheque~~~~~~~~~~~~~~~~~~\n");
         System.out.println("NB : avant de pouvoir emprunter un livre, vous devez \nvous creer un compte utilisateur\n");
         do { //choix de l'action
@@ -39,10 +41,17 @@ public class Principal{
             System.out.println("5. Emprunter un livre");
             System.out.println("6. Rendre un livre");
             System.out.println("7. voir la liste des emprunteurs");
-            System.out.println("8. Modifier un livre");
+            System.out.println("8. Mettre a jour les Quantités");
             System.out.println("9. Quitter");
             System.out.print("choix : ");
-            choix = scan.nextInt();
+            try{
+                choix = Integer.parseInt(scan.next());
+                if(choix < 1 || choix > 9){
+                    System.out.println("Choississez parmis les numeros ci dessous\n");
+                }
+            } catch (NumberFormatException e){
+                System.out.println("Entrer un numero parmis ceux ci-dessus s'il vous plaît");
+            }
             System.out.println();
             if(choix == 1){
                 System.out.println("Etes-vous \n1.un professeur ou \n2.un élève ? ");
@@ -398,10 +407,42 @@ public class Principal{
             }
             else if(choix == 6){
                 System.out.print("Entrer votre nom : ");
-                Nom = scan.nextLine();
-                System.out.println("yo");
+                Nom = scan.next();
+
+                System.out.print("Entrer le titre du livre a rendre : ");
+                Titre = scan.next();
+
+                biblio.RendreLivre(Nom,Titre);
             }
-        }while (choix != 9);
+            else if(choix == 7){
+                biblio.AfficherEmprunteur();
+            }
+            else if(choix == 8){
+                do {
+                    boolean rep = true;
+                    boolean rep2 = true;
+                    System.out.print("entrer l'Id du livre dont vous voulez mettre a jour les quantités : ");
+                    try {
+                        choixId = Integer.parseInt(scan.next());
+                    } catch (NumberFormatException e) {
+                        System.out.println("Entrer un nombre S'il vous plaît !");
+                        rep = false;
+                    }
+                    System.out.print("Entrer la quantité à ajouter : ");
+                    try {
+                        Quantite = Integer.parseInt(scan.next());
+                    } catch (NumberFormatException e) {
+                        System.out.println("un nombre s'il vous plaît !");
+                        rep2 = false;
+                    }
+                    if(rep && rep2){
+                        validation = true;
+                        biblio.MajQte(choixId,Quantite);
+                    }
+                }while (!validation);
+
+            }
+        }while (choix != 9 );
 
     }
 }

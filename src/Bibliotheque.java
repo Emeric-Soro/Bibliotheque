@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 public class Bibliotheque {
     ArrayList<Livre> inventaire = new ArrayList<>();
     ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+    ArrayList<Utilisateur> UemprunterLivre = new ArrayList<>();//Array liste pour les utilisateur qui ont emprunter un livre
     public void AjouterLivre(Livre L){
         inventaire.add(L);
     }
@@ -60,10 +61,84 @@ public class Bibliotheque {
                 LocalDate DateEcheance = DateEmprunt.plus(2,ChronoUnit.WEEKS);
                 System.out.println("Vous avez emprunté le livre : " + LEmprunter.getTitre()+" le "+DateEmprunt+" a "+HeureEmprunt);
                 System.out.println("la date d'echeance est fixé au : "+DateEcheance+" a "+HeureEcheance);
+                UemprunterLivre.add(u);
             } else {
                 System.out.println("Livre en rupture de stock ou introuvable");
             }
         }
     }
+    public void RendreLivre(String NomUtilisateur, String titre){
+        Utilisateur u = null;
+        for (Utilisateur U : UemprunterLivre) {
+            if (U.getNom().equalsIgnoreCase(NomUtilisateur)) {
+                u = U;
+                break;
+            }
+        }
+        if (u == null) {
+            System.out.println("Cet utilisateur est inexistant ! ou il n'a pas encore emprunter un livre");
+        } else {
+            Livre LRendre = null;
+            for (Livre l : u.getLivresEmprunter()){
+                if(l.getTitre().toLowerCase().matches(titre.toLowerCase())){
+                    LRendre = l;
+                    break;
+                }
+            }
+            if(LRendre != null){
+                int QteMaj = LRendre.getQuantiteDisponible();
+                LRendre.setQuantiteDisponible(QteMaj + 1);
+                u.RendreLivre(LRendre);
+                LocalDate DateRetour = LocalDate.now();
+                LocalTime HeureRetour = LocalTime.now();
+                System.out.println("vous avez rendu le livre "+LRendre.getTitre()+" le "+DateRetour+" a "+HeureRetour);
+            }
+            else {
+                System.out.println("vous n'avez pas emprunter ce livre ! Ou livre introuvable");
+            }
+        }
+    }
+    public void AfficherEmprunteur(){
+        System.out.println("~~~~~~~~~~~~~~~~~~~~LISTE DES EMPRUNTEUR~~~~~~~~~~~~~~~~~~~~\n");
+        for(Utilisateur u : utilisateurs){
+            System.out.println("Nom de l'utilisateur : "+u.getNom());
+            if(u.getLivresEmprunter().isEmpty()){
+                System.out.println("cet utilisateur n'a emprunter aucun livre");
+            }
+            else {
+                System.out.println("Livre emprunter par "+u.getLivresEmprunter());
+                for(Livre l : u.getLivresEmprunter()){
+                    System.out.println("* "+l.getTitre());
+                }
+            }
+            System.out.println();
+        }
 
+    }
+    public void MajQte(int id, int NQte){
+        Livre lMaj = null;
+        int QteActuelle;
+        int NouvelleQte;
+        for (Livre l : inventaire){
+            if(id == l.getId()){
+                lMaj = l;
+                break;
+            }
+        }
+        if(lMaj != null){
+            QteActuelle = lMaj.getQuantiteDisponible();
+            NouvelleQte = QteActuelle + NQte;
+            if(NouvelleQte < 0){
+                NouvelleQte = 0;
+            }
+            else{
+                lMaj.setQuantiteDisponible(NouvelleQte);
+            }
+            System.out.println("Les quantites du livre : "+lMaj.getTitre()+" ont ete mis a jour");
+        }
+        else {
+            System.out.println("livre introuvable !");
+        }
+
+    }
 }
