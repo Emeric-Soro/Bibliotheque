@@ -8,14 +8,24 @@ public class Bibliotheque {
     ArrayList<Auteur> auteurs = new ArrayList<>();
     ArrayList<Utilisateur> UemprunterLivre = new ArrayList<>();//liste pour les utilisateur qui ont emprunter un livre
     public void AjouterLivre(Livre L){
+        for(Livre l : inventaire){
+            if(l.getTitre().toLowerCase().matches(L.getTitre().toLowerCase()) && //verifie si le livre n'est pas déja present
+               l.getAuteur().toLowerCase().matches(L.getAuteur().toLowerCase()) &&
+               l.getEdition().toLowerCase().matches(L.getEdition().toLowerCase()) &&
+               l.getCategorie().toLowerCase().matches(L.getCategorie().toLowerCase())){
+                System.out.println("CE LIVRE EXISTE DEJA !");
+
+            }
+        }
         inventaire.add(L); //ajoute un livre dans la liste inventaire
     }
     public void AjouterUtilisateur(Utilisateur u){
         for(Utilisateur Uexiste : utilisateurs){
             if(Uexiste.getNom().toLowerCase().matches(u.getNom().toLowerCase()) && //verifie si l'utilisateur existe deja
-            Uexiste.getPrenom().toLowerCase().matches(u.getPrenom()) &&
-            Uexiste.getNumeroTelephone().matches(u.getNumeroTelephone())){
-                System.out.println("CET UTILISATEUR EXISTE DEJA !"); //s'il existe on renvois ce message
+               Uexiste.getPrenom().toLowerCase().matches(u.getPrenom()) &&
+               Uexiste.getNumeroTelephone().matches(u.getNumeroTelephone())){
+                System.out.println("CET UTILISATEUR EXISTE DEJA !");
+                System.out.println("pour augmenter la quantite clique sur 8 dans le menu \n");//s'il existe on renvois ce message
                 return;
             }
         }
@@ -30,7 +40,8 @@ public class Bibliotheque {
         }
     }
     //je cree une fonction Rechercher qui va retourner une liste(liste des resultats que la boucle va trouver)
-    public ArrayList<Livre> RechercheLivre(String Critere){ //je cree un fonction de type Arraylist pour pouvoir retourner une liste
+    public ArrayList<Livre> RechercheLivre(String Critere){
+        //je cree un fonction de type Arraylist pour pouvoir retourner une liste
         //je cree un liste pour les resultats de la reccherche pour facilité l'affichage
         ArrayList<Livre> resultat = new ArrayList<>();
         for (Livre l : inventaire) {

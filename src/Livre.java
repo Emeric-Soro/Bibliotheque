@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Livre {
+public class Livre implements MethodeCommune{
     private ArrayList<Auteur> auteurs;
     private int Id;
     private String Titre;
@@ -49,6 +49,7 @@ public class Livre {
         return Categorie;
     }
 
+    @Override
     public void AfficherDetails(){
         System.out.println("ID : "+getId());
         System.out.println("Titre : "+getTitre());
