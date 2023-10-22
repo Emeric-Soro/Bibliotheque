@@ -1,8 +1,8 @@
 public class Etudiant extends Utilisateur {
     String classe;
 
-    public Etudiant(String nom, String adresse, String numeroTelephone, String classe) {
-        super(nom, adresse, numeroTelephone);
+    public Etudiant(String nom,String prenom, String adresse, String numeroTelephone, String classe) {
+        super(nom,prenom, adresse, numeroTelephone);
         this.classe = classe;
     }
 

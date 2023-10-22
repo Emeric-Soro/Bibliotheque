@@ -1,8 +1,8 @@
 public class Professeur extends Utilisateur{
     String departement;
 
-    public Professeur(String nom, String adresse, String numeroTelephone, String departement) {
-        super(nom, adresse, numeroTelephone);
+    public Professeur(String nom, String prenom, String adresse, String numeroTelephone, String departement) {
+        super(nom,prenom, adresse, numeroTelephone);
         this.departement = departement;
     }
 

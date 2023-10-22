@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+
 public class Livre {
+    private ArrayList<Auteur> auteurs;
     private int Id;
     private String Titre;
     private String Auteur;
@@ -16,6 +19,7 @@ public class Livre {
         this.Edition = edition;
         this.QuantiteDisponible = Qte;
         this.Categorie = categorie;
+        auteurs = new ArrayList<>();
     }
     public int getId() {
         return Id;
@@ -52,5 +56,8 @@ public class Livre {
         System.out.println("Edition : "+getEdition());
         System.out.println("QuantiteDisponible : "+getQuantiteDisponible());
         System.out.println();
+    }
+    public void AjouterAuteur(Auteur a){
+        auteurs.add(a);
     }
 }

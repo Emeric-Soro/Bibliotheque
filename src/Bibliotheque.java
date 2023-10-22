@@ -1,17 +1,25 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 public class Bibliotheque {
     ArrayList<Livre> inventaire = new ArrayList<>();
     ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+    ArrayList<Auteur> auteurs = new ArrayList<>();
     ArrayList<Utilisateur> UemprunterLivre = new ArrayList<>();//Array liste pour les utilisateur qui ont emprunter un livre
     public void AjouterLivre(Livre L){
         inventaire.add(L);
     }
-    public void AjouterUtilisateur(Utilisateur U){
-        utilisateurs.add(U);
+    public void AjouterUtilisateur(Utilisateur u){
+        for(Utilisateur Uexiste : utilisateurs){
+            if(Uexiste.getNom().toLowerCase().matches(u.getNom().toLowerCase()) &&
+            Uexiste.getPrenom().toLowerCase().matches(u.getPrenom()) &&
+            Uexiste.getNumeroTelephone().matches(u.getNumeroTelephone())){
+                System.out.println("CET UTILISATEUR EXISTE DEJA !");
+                return;
+            }
+        }
+        utilisateurs.add(u);
     }
     public void VoirLivre(){
         System.out.println("~~~~~~~~les livres~~~~~~~~~");
@@ -33,10 +41,10 @@ public class Bibliotheque {
         }
         return resultat;
     }
-    public void EmprunterLivre(String NomUtilisateur, String titre) {
+    public void EmprunterLivre(String NomUtilisateur, String PrenomUtilisateur, String titre) {
         Utilisateur u = null;
         for (Utilisateur U : utilisateurs) {
-            if (U.getNom().equalsIgnoreCase(NomUtilisateur)) {
+            if (U.getNom().equalsIgnoreCase(NomUtilisateur) && U.getPrenom().equalsIgnoreCase(PrenomUtilisateur)) {
                 u = U;
                 break;
             }
@@ -67,10 +75,10 @@ public class Bibliotheque {
             }
         }
     }
-    public void RendreLivre(String NomUtilisateur, String titre){
+    public void RendreLivre(String NomUtilisateur, String PrenomUtilisateur, String titre){
         Utilisateur u = null;
         for (Utilisateur U : UemprunterLivre) {
-            if (U.getNom().equalsIgnoreCase(NomUtilisateur)) {
+            if (U.getNom().equalsIgnoreCase(NomUtilisateur) && U.getPrenom().equalsIgnoreCase(PrenomUtilisateur)){
                 u = U;
                 break;
             }
@@ -106,7 +114,7 @@ public class Bibliotheque {
                 System.out.println("cet utilisateur n'a emprunter aucun livre");
             }
             else {
-                System.out.println("Livre emprunter par "+u.getLivresEmprunter());
+                System.out.println("Livre emprunter par : "+u.getNom());
                 for(Livre l : u.getLivresEmprunter()){
                     System.out.println("* "+l.getTitre());
                 }
@@ -140,5 +148,22 @@ public class Bibliotheque {
             System.out.println("livre introuvable !");
         }
 
+    }
+    public void AjouterAuteur(Auteur a){
+        auteurs.add(a);
+    }
+    public void SupprimerLivre(int Id){
+        Livre Lsup = null;
+        for (Livre l : inventaire){
+            if(Id == l.getId()){
+                Lsup = l;
+                break;
+            }
+        }
+        if(Lsup != null){
+            inventaire.remove(Lsup);
+        }else {
+            System.out.println("Cet Id ne correspond a aucun livre !");
+        }
     }
 }
