@@ -10,6 +10,7 @@ public class Professeur extends Utilisateur{
     @Override
     public void AfficherDetails() {
         System.out.println("NOM : "+getNom());
+        System.out.println("PRENOM : "+getPrenom());
         System.out.println("Adresse : "+getAdresse());
         System.out.println("Numero de telephone : "+getNumeroTelephone());
         System.out.println("Departement : "+departement);

@@ -5,43 +5,58 @@ import java.lang.String;
 public class Principal{
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
-        int choix = 0;
-        int choixId = 0;
-        String Titre;
-        String Auteur;
-        String Edition;
-        String Categorie;
-        int Quantite = 0;
-        int Id;
-        String Domaine;
-        String Niveau;
-        String Genre;
-        String CritereRecherche;
-        String Nom;
-        String Prenom;
-        String Adresse;
-        String NumeroTel;
-        String Departement;
-        String Classe;
+
+        int Id; int choix = 0; int choixId = 0; int Quantite = 0;
+        String Titre; String Auteur; String Edition; String Categorie; String Domaine; String Niveau; String Genre; String CritereRecherche;
+        String Nom; String Prenom; String Adresse; String NumeroTel; String Departement; String Classe;
         boolean validation = false;
+
         //objet biblio de la class Bibliotheque
         Bibliotheque biblio = new Bibliotheque();
+
         //je cree des instance de livre pour pouvoir commencer le test directement
-        LivreScientifique Livre1 = new LivreScientifique(1,"ABC","Alpha","AB", "Scientifique",2,"Education","Primaire","educatif");
-        Roman Livre2 = new Roman(2,"L'Etranger","Albert Camus","Folio","Roman", 50,"fiction Absurde");
+        Roman R1 = new Roman(1,"La Peste","Albert Camus","Folio", "Roman",10,"fiction philosophique");
+        Roman R2 = new Roman(2,"L'Etranger","Albert Camus","Folio","Roman", 12,"fiction Absurde");
+        Roman R3 = new Roman(3,"Les soleils des l'independances","Amadou Kourouma","Presence Africaine","Roman",15,"fiction,engagee");
+
+        BandeDessinee BD1 = new BandeDessinee(4,"Berserk", "Kentaro Miura","Jump","Bande Desinee",0,"Manga");
+
+        LivreScientifique LS1 = new LivreScientifique(5,"Micrographia","Robert Hooke","ScienceF","Livre Scientifique",
+                                                      6,"Biologie","Avancé","Mode d'emploie");
+
+        LivreTheatrale LT1 = new LivreTheatrale(6,"Romeo et Juliette","William Shakespeare","Magnard","Livre Theatrale",
+                                                3,"Romance");
+
+        Poesie Po1 = new Poesie(7,"Coup de pilon","David Diop","Presence Africaine","Poesie",10,"Poesi engagee");
+
         //pareille ici je cree des instance d'utilisateur deja pret a etre utiliser
-        Professeur P1 = new Professeur("Satoru","Gojo","Abidjan","0123456789","Math");
+        Professeur P1 = new Professeur("Satoru","Gojo","Abidjan","0123456789","Math-info");
         Etudiant E1 = new Etudiant("Kouame","Brunelle", "Rue de la BIA","0787547896","L2-Droit");
+        Etudiant E2 = new Etudiant("Assy","Eliel","Yopougon","0142568975","L2-MIAGE");
+        Etudiant E3 = new Etudiant("Soro","Emeric","Cocody","0787154863","L2-MIAGE");
+
         //j'enregisqtre les utilisateurs
         biblio.AjouterUtilisateur(E1);
         biblio.AjouterUtilisateur(P1);
+        biblio.AjouterUtilisateur(E2);
+        biblio.AjouterUtilisateur(E3);
+
         //pareille pour les livre
-        biblio.AjouterLivre(Livre1);
-        biblio.AjouterLivre(Livre2);
+        biblio.AjouterLivre(R1);
+        biblio.AjouterLivre(R2);
+        biblio.AjouterLivre(R3);
+        biblio.AjouterLivre(BD1);
+        biblio.AjouterLivre(LS1);
+        biblio.AjouterLivre(LT1);
+        biblio.AjouterLivre(Po1);
+
         //j'ininitialise un premier emprunt
         biblio.EmprunterLivre("Kouame","Brunelle","L'Etranger");
+        biblio.EmprunterLivre("Soro","emeric","L'Etranger");
+        biblio.EmprunterLivre("Soro","emeric","coup de pilon");
+        biblio.EmprunterLivre("Assy","Eliel","berserk");
 
-        System.out.println("\n\t~~~~~~~~~~~~~~~~~~~~bienvenue dans ma bibliotheque~~~~~~~~~~~~~~~~~~~~\n");
+        System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~bienvenue dans ma bibliotheque~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         System.out.println("\t\tNB : avant de pouvoir emprunter un livre, vous devez \n\t\tvous creer un compte utilisateur\n");
         do { //Menu : choix de l'action
             System.out.println("\t1. Creer un nouvel utilisateur");
@@ -53,12 +68,13 @@ public class Principal{
             System.out.println("\t7. voir la liste des emprunteurs");
             System.out.println("\t8. Mettre a jour les Quantités");
             System.out.println("\t9. Ajouter un auteur");
-            System.out.println("\t10. Supprimer un livre");
-            System.out.println("\t11. Quitter");
-            System.out.print("\tchoix : ");
+            System.out.println("\t10. Afficher les auteurs");
+            System.out.println("\t11. Supprimer un livre");
+            System.out.println("\t12. Quitter");
+            System.out.println("\tchoix : ");
             try{
-                choix = Integer.parseInt(scan.next());
-                if(choix < 1 || choix > 11){
+                choix = Integer.parseInt(scan.nextLine());
+                if(choix < 1 || choix > 12){
                     System.out.println("\tChoississez parmis les numeros ci dessous\n");
                 }
             } catch (NumberFormatException e){
@@ -68,49 +84,50 @@ public class Principal{
             switch (choix){
                 case 1 ->{ //choix = 1 pour enregistrer un nouvel utilisateur soit professeur ou etudiant
                     System.out.println("\tEtes-vous \n1.un professeur ou \n2.un Etudiant ? ");
-                    System.out.print("\tchoix(1 ou 2) : ");
+                    System.out.println("choix(1 ou 2) : ");
                     int choixU = scan.nextInt();
+                    scan.nextLine(); //consomer le retour a la ligne
                     switch (choixU){
                         case 1 -> {
-                            System.out.print("\tEntrer votre nom : ");
+                            System.out.println("\tEntrer votre nom : ");
                             Nom = scan.nextLine();
-                            scan.nextLine();
 
-                            System.out.print("\tVotre Prenom(s) : ");
+                            System.out.println("\tVotre Prenom(s) : ");
                             Prenom = scan.nextLine();
 
-                            System.out.print("\tVotre adresse : ");
+                            System.out.println("\tVotre adresse : ");
                             Adresse = scan.nextLine();
 
-                            System.out.print("\tEntrer votre numero de telephone : ");
+                            System.out.println("\tEntrer votre numero de telephone : ");
                             NumeroTel = scan.nextLine();
 
-                            System.out.print("\tVotre departement : ");
+                            System.out.println("\tVotre departement : ");
                             Departement = scan.nextLine();
 
                             Professeur P = new Professeur(Nom,Prenom,Adresse,NumeroTel,Departement);
                             biblio.AjouterUtilisateur(P); //enregistrement du professeur
+
                             System.out.println("\tProfesseur Ajouter !\n");
                         }
                         case 2 -> {
-                            System.out.print("\tEntrer votre nom : ");
+                            System.out.println("\tEntrer votre nom : ");
                             Nom = scan.nextLine();
-                            scan.nextLine();
 
-                            System.out.print("\tVotre Prenom(s) : ");
+                            System.out.println("\tVotre Prenom(s) : ");
                             Prenom = scan.nextLine();
 
-                            System.out.print("\tVotre adresse : ");
+                            System.out.println("\tVotre adresse : ");
                             Adresse = scan.nextLine();
 
-                            System.out.print("\tEntrer votre numero de telephone : ");
+                            System.out.println("\tEntrer votre numero de telephone : ");
                             NumeroTel = scan.nextLine();
 
-                            System.out.print("\tVotre class : ");
+                            System.out.println("\tVotre class : ");
                             Classe = scan.nextLine();
 
                             Etudiant E = new Etudiant(Nom,Prenom,Adresse,NumeroTel,Classe);
                             biblio.AjouterUtilisateur(E);//enregistrement de l'etudiant
+
                             System.out.println("\tEtudiant ajouter !\n");
                         }
                         default -> System.out.println("\tchoisi 1 ou 2");
@@ -123,156 +140,163 @@ public class Principal{
                 System.out.println("\t3. Poesie ?");
                 System.out.println("\t4. Livre Theatrale ?");
                 System.out.println("\t5. Bande Dessinee ?");
-                System.out.print("\tchoix : ");
+                System.out.println("\tchoix : ");
                 int choixL = scan.nextInt();
+                scan.nextLine();//consomer le retour a la ligne
                 switch (choixL) {
                     case 1 -> {
                         //pour le cas ou c'est un livre scientifique
-                        System.out.print("\tId du livre : ");
+                        System.out.println("\tId du livre : ");
                         Id = scan.nextInt();
-                        scan.nextLine();
+                        scan.nextLine();//consomer le retour a la ligne
 
-                        System.out.print("\tTitre du livre : ");
+                        System.out.println("\tTitre du livre : ");
                         Titre = scan.nextLine();
 
-                        System.out.print("\tAuteur : ");
+                        System.out.println("\tAuteur : ");
                         Auteur = scan.nextLine();
 
-                        System.out.print("\tEdition : ");
+                        System.out.println("\tEdition : ");
                         Edition = scan.nextLine();
 
                         System.out.println("\tCategorie : ");
                         Categorie = scan.nextLine();
 
-                        System.out.print("\tQuantite : ");
+                        System.out.println("\tQuantite : ");
                         Quantite = scan.nextInt();
-                        scan.nextLine(); // Consommez le retour à la ligne en suspens (vu sur un forum)
+                        scan.nextLine();//consomer le retour a la ligne
 
-                        System.out.print("\tGenre : ");
+                        System.out.println("\tGenre : ");
                         Genre = scan.nextLine();
 
-                        System.out.print("\tDomaine Scientifique : ");
+                        System.out.println("\tDomaine Scientifique : ");
                         Domaine = scan.nextLine();
-                        System.out.print("\tNiveau d'etude : ");
+
+                        System.out.println("\tNiveau d'etude : ");
                         Niveau = scan.nextLine();
 
                         //je cree une nouvelle instance de Livre scientifique
                         LivreScientifique NLS = new LivreScientifique(Id, Titre, Auteur, Edition, Categorie, Quantite,Genre, Domaine, Niveau);
                         biblio.AjouterLivre(NLS); //NLS pour nouveau livre scientifique. ici grace au polymorphisme
+
                         System.out.println("\tnouveau livre ajouter !\n\n");
                     }
                     // NLS sera ajouter a l'inventaire comme LivreScientifique derive de Livre l'objet
                     // va être directement specifier
                     case 2 -> {
-                        System.out.print("\tId du livre : ");
+                        System.out.println("\tId du livre : ");
                         Id = scan.nextInt();
-                        scan.nextLine();
+                        scan.nextLine();//consomer le retour a la ligne
 
-                        System.out.print("\tTitre du livre : ");
+                        System.out.println("\tTitre du livre : ");
                         Titre = scan.nextLine();
 
-                        System.out.print("\tAuteur : ");
+                        System.out.println("\tAuteur : ");
                         Auteur = scan.nextLine();
 
-                        System.out.print("\tEdition : ");
+                        System.out.println("\tEdition : ");
                         Edition = scan.nextLine();
 
                         System.out.println("\tCategorie : ");
                         Categorie = scan.nextLine();
 
-                        System.out.print("\tQuantite : ");
+                        System.out.println("\tQuantite : ");
                         Quantite = scan.nextInt();
                         scan.nextLine(); // Consommez le retour à la ligne en suspens
 
-                        System.out.print("\tGenre : ");
+                        System.out.println("\tGenre : ");
                         Genre = scan.nextLine();
 
                         Roman NLR = new Roman(Id, Titre, Auteur, Edition, Categorie, Quantite, Genre);
                         biblio.AjouterLivre(NLR);
+
                         System.out.println("\tnouveau livre ajouter !\n\n");
                     }
                     case 3 -> {
-                        System.out.print("\tId du livre : ");
+                        System.out.println("\tId du livre : ");
                         Id = scan.nextInt();
-                        scan.nextLine();
+                        scan.nextLine();//consomer le retour a la ligne
 
-                        System.out.print("\tTitre du livre : ");
+                        System.out.println("\tTitre du livre : ");
                         Titre = scan.nextLine();
 
-                        System.out.print("\tAuteur : ");
+                        System.out.println("\tAuteur : ");
                         Auteur = scan.nextLine();
 
-                        System.out.print("\tEdition : ");
+                        System.out.println("\tEdition : ");
                         Edition = scan.nextLine();
 
-                        System.out.print("\tCategorie : ");
+                        System.out.println("\tCategorie : ");
                         Categorie = scan.nextLine();
 
-                        System.out.print("\tQuantite : ");
+                        System.out.println("\tQuantite : ");
                         Quantite = scan.nextInt();
                         scan.nextLine(); // Consommez le retour à la ligne en suspens
 
-                        System.out.print("\tGenre : ");
+                        System.out.println("\tGenre : ");
                         Genre = scan.nextLine();
 
                         Poesie NLP = new Poesie(Id, Titre, Auteur, Edition, Categorie, Quantite, Genre);
                         biblio.AjouterLivre(NLP);
+
                         System.out.println("\tnouveau livre ajouter !\n\n");
                     }
                     case 4 -> {
-                        System.out.print("\tId du livre : ");
+                        System.out.println("\tId du livre : ");
                         Id = scan.nextInt();
-                        scan.nextLine();
+                        scan.nextLine();//consomer le retour a la ligne
 
-                        System.out.print("\tTitre du livre : ");
+                        System.out.println("\tTitre du livre : ");
                         Titre = scan.nextLine();
 
-                        System.out.print("\tAuteur : ");
+                        System.out.println("\tAuteur : ");
                         Auteur = scan.nextLine();
 
-                        System.out.print("\tEdition : ");
+                        System.out.println("\tEdition : ");
                         Edition = scan.nextLine();
 
-                        System.out.print("\tCategorie : ");
+                        System.out.println("\tCategorie : ");
                         Categorie = scan.nextLine();
 
-                        System.out.print("\tQuantite : ");
+                        System.out.println("\tQuantite : ");
                         Quantite = scan.nextInt();
-                        scan.nextLine(); // Consommez le retour à la ligne en suspens
+                        scan.nextLine();//consomer le retour a la ligne
 
-                        System.out.print("\tGenre : ");
+                        System.out.println("\tGenre : ");
                         Genre = scan.nextLine();
 
                         LivreTheatrale NLT = new LivreTheatrale(Id, Titre, Auteur, Edition, Categorie, Quantite, Genre);
                         biblio.AjouterLivre(NLT);
+
                         System.out.println("\tnouveau livre ajouter !\n\n");
                     }
                     case 5 -> {
-                        System.out.print("\tId du livre : ");
+                        System.out.println("\tId du livre : ");
                         Id = scan.nextInt();
-                        scan.nextLine();
+                        scan.nextLine();//consomer le retour a la ligne
 
-                        System.out.print("\tTitre du livre : ");
+                        System.out.println("\tTitre du livre : ");
                         Titre = scan.nextLine();
 
-                        System.out.print("\tAuteur : ");
+                        System.out.println("\tAuteur : ");
                         Auteur = scan.nextLine();
 
-                        System.out.print("\tEdition : ");
+                        System.out.println("\tEdition : ");
                         Edition = scan.nextLine();
 
-                        System.out.print("\tCategorie : ");
+                        System.out.println("\tCategorie : ");
                         Categorie = scan.nextLine();
 
-                        System.out.print("\tQuantite : ");
+                        System.out.println("\tQuantite : ");
                         Quantite = scan.nextInt();
-                        scan.nextLine(); // Consommez le retour à la ligne en suspens
+                        scan.nextLine();//consomer le retour a la ligne
 
-                        System.out.print("\tGenre : ");
+                        System.out.println("\tGenre : ");
                         Genre = scan.nextLine();
 
                         BandeDessinee NLBD = new BandeDessinee(Id, Titre, Auteur, Edition,Categorie, Quantite, Genre);
                         biblio.AjouterLivre(NLBD);
+
                         System.out.println("\tnouveau livre ajouter !\n\n");
                     }
                 }
@@ -280,20 +304,20 @@ public class Principal{
             }
                 case 3 -> biblio.VoirLivre(); //affiche tous les livres avec les details
                 case 4 ->{ //recherche d'un livre
-                System.out.print("\tentrer le titre, l'auteur ou la categorie du livre rechercher : ");
-                scan.nextLine();
-
+                System.out.println("\tentrer le titre, l'auteur ou la categorie du livre rechercher : ");
                 CritereRecherche = scan.nextLine();
-                ArrayList<Livre> resultat = biblio.RechercheLivre(CritereRecherche);
+
+                ArrayList<Livre> resultat = biblio.RechercheLivre(CritereRecherche);//liste pour retourner les resultats de la recheche
 
                 if(!resultat.isEmpty()) {
-                    System.out.println("\tresultats de la recherche : ");
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~Resultats de la recherche~~~~~~~~~~~~~~~~~~~~~~");
                     for (Livre livre : resultat) {
                         livre.AfficherDetails();
                     }
                 }else { //si le livre n'est pas dans la bibliotheque on vous propose de l'ajouter si vous accepter vous aller l'ajouter
                     System.out.println("\tce livre n'est pas dans la bibliotheque !");
-                    System.out.print("\tvoulez vous l'ajouter ? \n choix(oui ou non) : ");
+
+                    System.out.println("\tvoulez vous l'ajouter ? \n choix(oui ou non) : ");
                     String choix2 = scan.nextLine();
 
 
@@ -304,38 +328,39 @@ public class Principal{
                         System.out.println("\t3. Poesie ?");
                         System.out.println("\t4. Livre Theatrale ?");
                         System.out.println("\t5. Bande Dessinee ?");
-                        System.out.print("\tchoix : ");
+                        System.out.println("\tchoix : ");
                         int choixL = scan.nextInt();
+                        scan.nextLine();//consomer le retour a la ligne
                         switch (choixL) {
                             case 1 -> {
                                 //pour le cas ou c'est un livre scientifique
-                                System.out.print("\tId du livre : ");
+                                System.out.println("\tId du livre : ");
                                 Id = scan.nextInt();
-                                scan.nextLine();
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tTitre du livre : ");
+                                System.out.println("\tTitre du livre : ");
                                 Titre = scan.nextLine();
 
-                                System.out.print("\tAuteur : ");
+                                System.out.println("\tAuteur : ");
                                 Auteur = scan.nextLine();
 
-                                System.out.print("\tEdition : ");
+                                System.out.println("\tEdition : ");
                                 Edition = scan.nextLine();
 
                                 System.out.println("\tCategorie : ");
                                 Categorie = scan.nextLine();
 
-                                System.out.print("\tQuantite : ");
+                                System.out.println("\tQuantite : ");
                                 Quantite = scan.nextInt();
-                                scan.nextLine(); // Consommez le retour à la ligne en suspens
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tGenre : ");
+                                System.out.println("\tGenre : ");
                                 Genre = scan.nextLine();
 
-                                System.out.print("\tDomaine Scientifique : ");
+                                System.out.println("\tDomaine Scientifique : ");
                                 Domaine = scan.nextLine();
 
-                                System.out.print("\tNiveau d'etude : ");
+                                System.out.println("\tNiveau d'etude : ");
                                 Niveau = scan.nextLine();
 
                                 //je cree une nouvelle instance de Livre scientifique
@@ -347,27 +372,27 @@ public class Principal{
                             // NLS sera ajouter a l'inventaire comme LivreScientifique derive de Livre l'objet
                             // va être directement specifier
                             case 2 -> {
-                                System.out.print("\tId du livre : ");
+                                System.out.println("\tId du livre : ");
                                 Id = scan.nextInt();
-                                scan.nextLine();
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tTitre du livre : ");
+                                System.out.println("\tTitre du livre : ");
                                 Titre = scan.nextLine();
 
-                                System.out.print("\tAuteur : ");
+                                System.out.println("\tAuteur : ");
                                 Auteur = scan.nextLine();
 
-                                System.out.print("\tEdition : ");
+                                System.out.println("\tEdition : ");
                                 Edition = scan.nextLine();
 
                                 System.out.println("\tCategorie : ");
                                 Categorie = scan.nextLine();
 
-                                System.out.print("\tQuantite : ");
+                                System.out.println("\tQuantite : ");
                                 Quantite = scan.nextInt();
-                                scan.nextLine(); // Consommez le retour à la ligne en suspens
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tGenre : ");
+                                System.out.println("\tGenre : ");
                                 Genre = scan.nextLine();
 
                                 Roman NLR = new Roman(Id, Titre, Auteur, Edition, Categorie, Quantite, Genre);
@@ -376,27 +401,27 @@ public class Principal{
                                 System.out.println("\tnouveau livre ajouter !\n\n");
                             }
                             case 3 -> {
-                                System.out.print("\tId du livre : ");
+                                System.out.println("\tId du livre : ");
                                 Id = scan.nextInt();
-                                scan.nextLine();
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tTitre du livre : ");
+                                System.out.println("\tTitre du livre : ");
                                 Titre = scan.nextLine();
 
-                                System.out.print("\tAuteur : ");
+                                System.out.println("\tAuteur : ");
                                 Auteur = scan.nextLine();
 
-                                System.out.print("\tEdition : ");
+                                System.out.println("\tEdition : ");
                                 Edition = scan.nextLine();
 
                                 System.out.println("\tCategorie : ");
                                 Categorie = scan.nextLine();
 
-                                System.out.print("\tQuantite : ");
+                                System.out.println("\tQuantite : ");
                                 Quantite = scan.nextInt();
-                                scan.nextLine(); // Consommez le retour à la ligne en suspens
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tGenre : ");
+                                System.out.println("\tGenre : ");
                                 Genre = scan.nextLine();
 
                                 Poesie NLP = new Poesie(Id, Titre, Auteur, Edition, Categorie, Quantite, Genre);
@@ -405,27 +430,27 @@ public class Principal{
                                 System.out.println("\tnouveau livre ajouter !\n\n");
                             }
                             case 4 -> {
-                                System.out.print("\tId du livre : ");
+                                System.out.println("\tId du livre : ");
                                 Id = scan.nextInt();
-                                scan.nextLine();
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tTitre du livre : ");
+                                System.out.println("\tTitre du livre : ");
                                 Titre = scan.nextLine();
 
-                                System.out.print("\tAuteur : ");
+                                System.out.println("\tAuteur : ");
                                 Auteur = scan.nextLine();
 
-                                System.out.print("\tEdition : ");
+                                System.out.println("\tEdition : ");
                                 Edition = scan.nextLine();
 
                                 System.out.println("\tCategorie : ");
                                 Categorie = scan.nextLine();
 
-                                System.out.print("\tQuantite : ");
+                                System.out.println("\tQuantite : ");
                                 Quantite = scan.nextInt();
-                                scan.nextLine(); // Consommez le retour à la ligne en suspens
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tGenre : ");
+                                System.out.println("\tGenre : ");
                                 Genre = scan.nextLine();
 
                                 LivreTheatrale NLT = new LivreTheatrale(Id, Titre, Auteur, Edition, Categorie, Quantite, Genre);
@@ -434,26 +459,32 @@ public class Principal{
                                 System.out.println("\tnouveau livre ajouter !\n\n");
                             }
                             case 5 -> {
-                                System.out.print("\tId du livre : ");
+                                System.out.println("\tId du livre : ");
                                 Id = scan.nextInt();
-                                scan.nextLine();
+                                scan.nextLine();//consomer le retour a la ligne
 
-                                System.out.print("\tTitre du livre : ");
+                                System.out.println("\tTitre du livre : ");
                                 Titre = scan.nextLine();
-                                System.out.print("\tAuteur : ");
+
+                                System.out.println("\tAuteur : ");
                                 Auteur = scan.nextLine();
-                                System.out.print("\tEdition : ");
+
+                                System.out.println("\tEdition : ");
                                 Edition = scan.nextLine();
+
                                 System.out.println("\tCategorie : ");
                                 Categorie = scan.nextLine();
-                                System.out.print("\tQuantite : ");
-                                Quantite = scan.nextInt();
-                                scan.nextLine(); // Consommez le retour à la ligne en suspens
 
-                                System.out.print("\tGenre : ");
+                                System.out.println("\tQuantite : ");
+                                Quantite = scan.nextInt();
+                                scan.nextLine();//consomer le retour a la ligne
+
+                                System.out.println("\tGenre : ");
                                 Genre = scan.nextLine();
+
                                 BandeDessinee NLBD = new BandeDessinee(Id, Titre, Auteur, Edition,Categorie, Quantite, Genre);
                                 biblio.AjouterLivre(NLBD);
+
                                 System.out.println("\tnouveau livre ajouter !\n\n");
                             }
                         }
@@ -467,26 +498,26 @@ public class Principal{
                 }
             }
                 case 5 ->{//pour emprunter un livre
-                System.out.print("\tentrer le titre du livre que vous souhaitez emprunter : ");
-                Titre = scan.next();
+                System.out.println("\tEntrer votre nom : ");
+                Nom = scan.nextLine();
 
-                System.out.print("\tEntrer votre nom : ");
-                Nom = scan.next();
+                System.out.println("\tVotre Prenom(s) : ");
+                Prenom = scan.nextLine();
 
-                System.out.print("\tVotre Prenom(s) : ");
-                Prenom = scan.next();
+                System.out.println("\tentrer le titre du livre que vous souhaitez emprunter : ");
+                Titre = scan.nextLine();
 
                 biblio.EmprunterLivre(Nom,Prenom,Titre);
                 }
                 case 6 ->{ //pour rendre un livre
-                System.out.print("\tEntrer votre nom : ");
-                Nom = scan.next();
+                System.out.println("\tEntrer votre nom : ");
+                Nom = scan.nextLine();
 
-                System.out.print("\tVotre Prenom(s) : ");
-                Prenom = scan.next();
+                System.out.println("\tVotre Prenom(s) : ");
+                Prenom = scan.nextLine();
 
-                System.out.print("\tEntrer le titre du livre a rendre : ");
-                Titre = scan.next();
+                System.out.println("\tEntrer le titre du livre a rendre : ");
+                Titre = scan.nextLine();
 
                 biblio.RendreLivre(Nom,Prenom,Titre);
                 }
@@ -495,16 +526,16 @@ public class Principal{
                 do {
                     boolean rep = true;
                     boolean rep2 = true;
-                    System.out.print("\tentrer l'Id du livre dont vous voulez mettre a jour les quantités : ");
+                    System.out.println("\tentrer l'Id du livre dont vous voulez mettre a jour les quantités : ");
                     try {
-                        choixId = Integer.parseInt(scan.next());
+                        choixId = Integer.parseInt(scan.nextLine());
                     } catch (NumberFormatException e) {
                         System.out.println("\tEntrer un nombre S'il vous plaît !");
                         rep = false;
                     }
-                    System.out.print("\tEntrer la quantité à ajouter : ");
+                    System.out.println("\tEntrer la quantité à ajouter : ");
                     try {
-                        Quantite = Integer.parseInt(scan.next());
+                        Quantite = Integer.parseInt(scan.nextLine());
                     } catch (NumberFormatException e) {
                         System.out.println("\tun nombre s'il vous plaît !");
                         rep2 = false;
@@ -517,14 +548,13 @@ public class Principal{
 
                 }
                 case 9 ->{ //ajouter un nouvelle auteur
-                System.out.print("\tEntrer le nom de l'auteur : ");
+                System.out.println("\tEntrer le nom de l'auteur : ");
                 Nom = scan.nextLine();
-                scan.nextLine();
 
-                System.out.print("\tla date de naissance de l'auteur : ");
+                System.out.println("\tla date de naissance de l'auteur : ");
                 String DateNaissance = scan.nextLine();
 
-                System.out.print("\tEcrivez la biographie de l'auteur : ");
+                System.out.println("\tEcrivez la biographie de l'auteur : ");
                 String Bio = scan.nextLine();
 
                 Auteur A = new Auteur(Nom,DateNaissance,Bio);
@@ -532,12 +562,16 @@ public class Principal{
 
                 System.out.println(("Auteur ajouter !"));
                 }
-                case 10 ->{ //supprime un livre
-                    System.out.print("Entrer l' id du livre que vous voulez supprimer : ");
+                case 10 -> biblio.AfficherAuteur();
+                case 11 ->{ //supprime un livre
+                    System.out.println("Entrer l' id du livre que vous voulez supprimer : ");
                     Id = scan.nextInt();
+                    scan.nextLine();//consomer le retour a la ligne
+
                     biblio.SupprimerLivre(Id);
+                    System.out.println("livre supprimer !");
                 }
             }
-        }while (choix != 11 );
+        }while (choix != 12 );
     }
 }

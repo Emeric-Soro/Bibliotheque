@@ -4,8 +4,11 @@ public class LivreTheatrale extends Livre {
         super(id, titre, auteur, edition,categorie, Qte);
         this.Genre = genre;
     }
+
+
     @Override
     public void AfficherDetails(){
+        System.out.println("Genre : "+Genre);
         super.AfficherDetails();
     }
 }

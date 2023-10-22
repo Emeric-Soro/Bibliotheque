@@ -1,17 +1,12 @@
 import java.util.ArrayList;
 
 public class Livre implements MethodeCommune{
-    private ArrayList<Auteur> auteurs;
     private int Id;
     private String Titre;
     private String Auteur;
     private String Edition;
-    private String Categorie;
+    private String Categorie; //la categorie c'est LivreScientifique ou Roman ou Poesie...
     private int QuantiteDisponible;
-    public Livre(String titre, String auteur){
-        this.Titre = titre;
-        this.Auteur = auteur;
-    }
     public Livre(int id,String titre,String auteur,String edition,String categorie, int Qte){
         this.Id = id;
         this.Titre = titre;
@@ -19,7 +14,6 @@ public class Livre implements MethodeCommune{
         this.Edition = edition;
         this.QuantiteDisponible = Qte;
         this.Categorie = categorie;
-        auteurs = new ArrayList<>();
     }
     public int getId() {
         return Id;
@@ -50,15 +44,12 @@ public class Livre implements MethodeCommune{
     }
 
     @Override
-    public void AfficherDetails(){
+    public void AfficherDetails(){ //methode pour affischer les details des livres
         System.out.println("ID : "+getId());
         System.out.println("Titre : "+getTitre());
         System.out.println("Auteur : "+getAuteur());
         System.out.println("Edition : "+getEdition());
         System.out.println("QuantiteDisponible : "+getQuantiteDisponible());
         System.out.println();
-    }
-    public void AjouterAuteur(Auteur a){
-        auteurs.add(a);
     }
 }

@@ -8,29 +8,10 @@ public class Bibliotheque {
     ArrayList<Auteur> auteurs = new ArrayList<>();
     ArrayList<Utilisateur> UemprunterLivre = new ArrayList<>();//liste pour les utilisateur qui ont emprunter un livre
     public void AjouterLivre(Livre L){
-        for(Livre l : inventaire){
-            if(l.getTitre().toLowerCase().matches(L.getTitre().toLowerCase()) && //verifie si le livre n'est pas déja present
-               l.getAuteur().toLowerCase().matches(L.getAuteur().toLowerCase()) &&
-               l.getEdition().toLowerCase().matches(L.getEdition().toLowerCase()) &&
-               l.getCategorie().toLowerCase().matches(L.getCategorie().toLowerCase())){
-                System.out.println("CE LIVRE EXISTE DEJA !");
-
-            }
-        }
         inventaire.add(L); //ajoute un livre dans la liste inventaire
     }
     public void AjouterUtilisateur(Utilisateur u){
-        for(Utilisateur Uexiste : utilisateurs){
-            if(Uexiste.getNom().toLowerCase().matches(u.getNom().toLowerCase()) && //verifie si l'utilisateur existe deja
-               Uexiste.getPrenom().toLowerCase().matches(u.getPrenom()) &&
-               Uexiste.getNumeroTelephone().matches(u.getNumeroTelephone())){
-                System.out.println("CET UTILISATEUR EXISTE DEJA !");
-                System.out.println("pour augmenter la quantite clique sur 8 dans le menu \n");//s'il existe on renvois ce message
-                return;
-            }
-        }
-        //s'il n'existe pas on l'enregistre dans la liste des utilisateurs
-        utilisateurs.add(u);
+        utilisateurs.add(u); //ajoute un utilisateur dans la liste utilisateur
     }
     public void VoirLivre(){ //afficher les details des livres dans notre liste
         System.out.println("~~~~~~~~~~~~~~les livres~~~~~~~~~~~~~~");
@@ -55,7 +36,7 @@ public class Bibliotheque {
     }
     public void EmprunterLivre(String NomUtilisateur, String PrenomUtilisateur, String titre) {
         Utilisateur u = null; //je fais ca pour utiliser u plus tard dans la methode
-        for (Utilisateur U : utilisateurs) {
+        for (Utilisateur U :utilisateurs) {
             if (U.getNom().equalsIgnoreCase(NomUtilisateur) && U.getPrenom().equalsIgnoreCase(PrenomUtilisateur)) {
                 u = U; //si il y'a correspondance entre les nom et les prenom u prend la valeur de l'utilisateur U
                 break;
@@ -79,11 +60,11 @@ public class Bibliotheque {
                 LocalTime HeureEcheance = HeureEmprunt.plus(1,ChronoUnit.HOURS);
                 LocalDate DateEmprunt = LocalDate.now();
                 LocalDate DateEcheance = DateEmprunt.plus(2,ChronoUnit.WEEKS);
-                System.out.println("Vous avez emprunté le livre : " + LEmprunter.getTitre()+" le "+DateEmprunt+" a "+HeureEmprunt);
+                System.out.println(NomUtilisateur+" a emprunté le livre : " + LEmprunter.getTitre()+" le "+DateEmprunt+" a "+HeureEmprunt);
                 System.out.println("la date d'echeance est fixé au : "+DateEcheance+" a "+HeureEcheance);
                 UemprunterLivre.add(u);
             } else {
-                System.out.println("Livre en rupture de stock ou introuvable"); //sinon je renvois ce message
+                System.out.println(NomUtilisateur+" le livre est en rupture de stock ou introuvable"); //sinon je renvois ce message
             }
         }
     }
@@ -126,7 +107,7 @@ public class Bibliotheque {
                 System.out.println("cet utilisateur n'a emprunter aucun livre");
             }
             else {
-                System.out.println("Livre emprunter par : "+u.getNom());
+                System.out.println("Livre emprunter par "+u.getNom()+" :");
                 for(Livre l : u.getLivresEmprunter()){ //ici j'affiche tous les livres emprunter par l'utilisateur
                     System.out.println("* "+l.getTitre());
                 }
@@ -163,6 +144,12 @@ public class Bibliotheque {
     }
     public void AjouterAuteur(Auteur a){
         auteurs.add(a);
+    }
+    public void AfficherAuteur(){
+        for(Auteur a : auteurs){
+            a.AfficherDetails();
+            System.out.println();
+        }
     }
     public void SupprimerLivre(int Id){ //je fais une recherche a partir de l'id du livre a supprimer comme dans la methode MajQte
         Livre Lsup = null;

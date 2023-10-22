@@ -1,12 +1,12 @@
 public class Auteur implements MethodeCommune{
-    private final String Nom;
-    private final String DateNaissance;
-    private final String Biographie;
+    private String Nom;
+    private String DateNaissance;
+    private String Biographie;
 
     public Auteur(String nom, String dateNaissance, String biographie) {
-        Nom = nom;
-        DateNaissance = dateNaissance;
-        Biographie = biographie;
+        this.Nom = nom;
+        this.DateNaissance = dateNaissance;
+        this.Biographie = biographie;
     }
 
     public String getNom() {

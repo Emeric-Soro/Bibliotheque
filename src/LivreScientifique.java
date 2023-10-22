@@ -13,25 +13,11 @@ public class LivreScientifique extends Livre{
     public String getDomaine() {
         return Domaine;
     }
-
-    public void setDomaine(String domaine) {
-        Domaine = domaine;
-    }
-
     public String getNiveau() {
         return Niveau;
     }
-
-    public void setNiveau(String niveau) {
-        Niveau = niveau;
-    }
-
     public String getGenre() {
         return Genre;
-    }
-
-    public void setGenre(String genre) {
-        Genre = genre;
     }
 
     @Override
