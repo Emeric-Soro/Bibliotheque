@@ -570,7 +570,7 @@ public class Principal{
 
                     biblio.SupprimerLivre(Id);
                     System.out.println("livre supprimer !");
-                }
+                }default -> System.out.println("choix innatendu");
             }
         }while (choix != 12 );
     }
