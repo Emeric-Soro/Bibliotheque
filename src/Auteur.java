@@ -19,6 +19,7 @@ public class Auteur implements MethodeCommune{
         return Biographie;
     }
     @Override
+    //afficher les details sur l'auteur
     public void AfficherDetails(){
         System.out.println("NOM : "+getNom());
         System.out.println("Date de naissance : "+getDateNaissance());

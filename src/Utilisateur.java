@@ -29,10 +29,10 @@ public abstract class Utilisateur implements MethodeCommune{
         return NumeroTelephone;
     }
 
-    public void EmprunterLivre(Livre l){
+    public void EmprunterLivre(Livre l){ //lier a la methode EmprunterLivre de la class Bibliotheque
         LivresEmprunter.add(l);
     }
-    public void RendreLivre(Livre l){
+    public void RendreLivre(Livre l){ // lier a la methode RendreLivre de Bibliotheque
         LivresEmprunter.remove(l);
     }
 
@@ -42,5 +42,5 @@ public abstract class Utilisateur implements MethodeCommune{
     }
 
     @Override
-    public abstract void AfficherDetails();
+    public abstract void AfficherDetails(); //Methode abstraite qui va permettre a la class Professeur d'afficher les details et aussi a la class Etudiant
 }

@@ -24,20 +24,26 @@ public class Principal{
         String Departement;
         String Classe;
         boolean validation = false;
+        //objet biblio de la class Bibliotheque
         Bibliotheque biblio = new Bibliotheque();
+        //je cree des instance de livre pour pouvoir commencer le test directement
         LivreScientifique Livre1 = new LivreScientifique(1,"ABC","Alpha","AB", "Scientifique",2,"Education","Primaire","educatif");
         Roman Livre2 = new Roman(2,"L'Etranger","Albert Camus","Folio","Roman", 50,"fiction Absurde");
+        //pareille ici je cree des instance d'utilisateur deja pret a etre utiliser
         Professeur P1 = new Professeur("Satoru","Gojo","Abidjan","0123456789","Math");
         Etudiant E1 = new Etudiant("Kouame","Brunelle", "Rue de la BIA","0787547896","L2-Droit");
+        //j'enregisqtre les utilisateurs
         biblio.AjouterUtilisateur(E1);
         biblio.AjouterUtilisateur(P1);
+        //pareille pour les livre
         biblio.AjouterLivre(Livre1);
         biblio.AjouterLivre(Livre2);
+        //j'ininitialise un premier emprunt
         biblio.EmprunterLivre("Kouame","Brunelle","L'Etranger");
 
         System.out.println("\n\t~~~~~~~~~~~~~~~~~~~~bienvenue dans ma bibliotheque~~~~~~~~~~~~~~~~~~~~\n");
         System.out.println("\t\tNB : avant de pouvoir emprunter un livre, vous devez \n\t\tvous creer un compte utilisateur\n");
-        do { //choix de l'action
+        do { //Menu : choix de l'action
             System.out.println("\t1. Creer un nouvel utilisateur");
             System.out.println("\t2. Ajouter un nouveau livre");
             System.out.println("\t3. voir la liste des livres");
@@ -60,8 +66,8 @@ public class Principal{
             }
             System.out.println();
             switch (choix){
-                case 1 ->{
-                    System.out.println("\tEtes-vous \n1.un professeur ou \n2.un élève ? ");
+                case 1 ->{ //choix = 1 pour enregistrer un nouvel utilisateur soit professeur ou etudiant
+                    System.out.println("\tEtes-vous \n1.un professeur ou \n2.un Etudiant ? ");
                     System.out.print("\tchoix(1 ou 2) : ");
                     int choixU = scan.nextInt();
                     switch (choixU){
@@ -83,7 +89,7 @@ public class Principal{
                             Departement = scan.nextLine();
 
                             Professeur P = new Professeur(Nom,Prenom,Adresse,NumeroTel,Departement);
-                            biblio.AjouterUtilisateur(P);
+                            biblio.AjouterUtilisateur(P); //enregistrement du professeur
                             System.out.println("\tProfesseur Ajouter !\n");
                         }
                         case 2 -> {
@@ -104,7 +110,7 @@ public class Principal{
                             Classe = scan.nextLine();
 
                             Etudiant E = new Etudiant(Nom,Prenom,Adresse,NumeroTel,Classe);
-                            biblio.AjouterUtilisateur(E);
+                            biblio.AjouterUtilisateur(E);//enregistrement de l'etudiant
                             System.out.println("\tEtudiant ajouter !\n");
                         }
                         default -> System.out.println("\tchoisi 1 ou 2");
@@ -140,7 +146,7 @@ public class Principal{
 
                         System.out.print("\tQuantite : ");
                         Quantite = scan.nextInt();
-                        scan.nextLine(); // Consommez le retour à la ligne en suspens
+                        scan.nextLine(); // Consommez le retour à la ligne en suspens (vu sur un forum)
 
                         System.out.print("\tGenre : ");
                         Genre = scan.nextLine();
@@ -272,20 +278,20 @@ public class Principal{
                 }
 
             }
-                case 3 -> biblio.VoirLivre();
-                case 4 ->{
+                case 3 -> biblio.VoirLivre(); //affiche tous les livres avec les details
+                case 4 ->{ //recherche d'un livre
                 System.out.print("\tentrer le titre, l'auteur ou la categorie du livre rechercher : ");
                 scan.nextLine();
+
                 CritereRecherche = scan.nextLine();
-
-
                 ArrayList<Livre> resultat = biblio.RechercheLivre(CritereRecherche);
+
                 if(!resultat.isEmpty()) {
                     System.out.println("\tresultats de la recherche : ");
                     for (Livre livre : resultat) {
                         livre.AfficherDetails();
                     }
-                }else {
+                }else { //si le livre n'est pas dans la bibliotheque on vous propose de l'ajouter si vous accepter vous aller l'ajouter
                     System.out.println("\tce livre n'est pas dans la bibliotheque !");
                     System.out.print("\tvoulez vous l'ajouter ? \n choix(oui ou non) : ");
                     String choix2 = scan.nextLine();
@@ -460,7 +466,7 @@ public class Principal{
                     }
                 }
             }
-                case 5 ->{
+                case 5 ->{//pour emprunter un livre
                 System.out.print("\tentrer le titre du livre que vous souhaitez emprunter : ");
                 Titre = scan.next();
 
@@ -472,7 +478,7 @@ public class Principal{
 
                 biblio.EmprunterLivre(Nom,Prenom,Titre);
                 }
-                case 6 ->{
+                case 6 ->{ //pour rendre un livre
                 System.out.print("\tEntrer votre nom : ");
                 Nom = scan.next();
 
@@ -484,8 +490,8 @@ public class Principal{
 
                 biblio.RendreLivre(Nom,Prenom,Titre);
                 }
-                case 7 -> biblio.AfficherEmprunteur();
-                case 8 ->{
+                case 7 -> biblio.AfficherEmprunteur(); //affiche tous les utilisateurs et les livres qu'ils ont emprunter ou non pour ceux qui n'en n'ont pas emprunter
+                case 8 ->{ //mettre a jour les qte
                 do {
                     boolean rep = true;
                     boolean rep2 = true;
@@ -510,8 +516,8 @@ public class Principal{
                 }while (!validation);
 
                 }
-                case 9 ->{
-                System.out.print("\tEntrer votre nom : ");
+                case 9 ->{ //ajouter un nouvelle auteur
+                System.out.print("\tEntrer le nom de l'auteur : ");
                 Nom = scan.nextLine();
                 scan.nextLine();
 
@@ -526,7 +532,7 @@ public class Principal{
 
                 System.out.println(("Auteur ajouter !"));
                 }
-                case 10 ->{
+                case 10 ->{ //supprime un livre
                     System.out.print("Entrer l' id du livre que vous voulez supprimer : ");
                     Id = scan.nextInt();
                     biblio.SupprimerLivre(Id);
